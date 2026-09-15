@@ -5,7 +5,7 @@
    ============================================================ */
 
 import { $, $$ } from './utils.js';
-import { state, persist, refresh } from '../store.js';
+import { state, persist, refresh } from './store.js';
 
 import { initCalendar } from './calendar.js';
 import { initEvents } from './events.js';
