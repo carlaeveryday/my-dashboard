@@ -1,0 +1,296 @@
+<!DOCTYPE html>
+<html lang="es" data-theme="dark">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>My Dashboard · Carla</title>
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Archivo+Black&family=Sora:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+<!-- Base: tokens de color, tipografía, layout, sidebar, cabecera, botones, modales -->
+<link rel="stylesheet" href="css/base.css">
+<!-- Una hoja por herramienta -->
+<link rel="stylesheet" href="css/calendar.css">
+<link rel="stylesheet" href="css/grades.css">
+<link rel="stylesheet" href="css/todos.css">
+<link rel="stylesheet" href="css/links.css">
+</head>
+<body>
+
+<div class="app">
+
+  <!-- ===================== SIDEBAR ===================== -->
+  <aside class="sidebar" id="sidebar" aria-label="Navegación principal">
+    <div class="sidebar__brand">
+      <div class="brand-mark">C</div>
+      <div class="sidebar__label">My Dashboard</div>
+    </div>
+
+    <nav id="nav">
+      <button class="nav-item is-active" data-view="inicio">
+        <svg viewBox="0 0 24 24"><path d="M3 10.5 12 3l9 7.5"/><path d="M5 9.5V21h14V9.5"/></svg>
+        <span class="sidebar__label">Inicio</span>
+      </button>
+      <button class="nav-item" data-view="calendario">
+        <svg viewBox="0 0 24 24"><rect x="3" y="5" width="18" height="16" rx="3"/><path d="M8 3v4M16 3v4M3 10h18"/></svg>
+        <span class="sidebar__label">Calendario</span>
+      </button>
+      <button class="nav-item" data-view="notas">
+        <svg viewBox="0 0 24 24"><path d="M5 20V10M12 20V4M19 20v-7"/></svg>
+        <span class="sidebar__label">Notas</span>
+      </button>
+      <button class="nav-item" data-view="tareas">
+        <svg viewBox="0 0 24 24"><path d="M4 7h16M4 12h16M4 17h10"/></svg>
+        <span class="sidebar__label">Tareas</span>
+      </button>
+      <button class="nav-item" data-view="accesos">
+        <svg viewBox="0 0 24 24"><rect x="3" y="3" width="7" height="7" rx="2"/><rect x="14" y="3" width="7" height="7" rx="2"/><rect x="3" y="14" width="7" height="7" rx="2"/><rect x="14" y="14" width="7" height="7" rx="2"/></svg>
+        <span class="sidebar__label">Accesos</span>
+      </button>
+    </nav>
+
+    <div class="sidebar__foot">
+      <button class="nav-item" id="pinBtn" title="Fijar el menú abierto">
+        <svg viewBox="0 0 24 24"><path d="M9 4h6l-1 6 4 3v2H6v-2l4-3-1-6Z"/><path d="M12 15v5"/></svg>
+        <span class="sidebar__label">Fijar menú</span>
+      </button>
+    </div>
+  </aside>
+
+  <!-- ===================== CONTENIDO ===================== -->
+  <main class="main">
+
+    <header class="topbar">
+      <h1 class="wordmark">MY DASHBOARD</h1>
+      <div class="topbar__spacer"></div>
+      <div class="clock">
+        <div>
+          <span id="clockTime">--:--</span>
+          <small id="clockDate">—</small>
+        </div>
+      </div>
+      <button class="switch" id="themeToggle" role="switch" aria-checked="true" aria-label="Cambiar entre modo claro y oscuro">
+        <span aria-hidden="true">🌙<em>☀</em></span>
+      </button>
+    </header>
+
+    <div class="greeting">
+      <h2 id="greetText">¡Hola, Carla!</h2>
+      <p>1º de Bachillerato · <span id="pendingCount">—</span></p>
+    </div>
+
+    <!-- ---------- Vista: Inicio ---------- -->
+    <section class="view is-active" id="view-inicio">
+      <div class="grid grid--home">
+        <div class="card">
+          <div class="cal__top">
+            <button class="btn btn--icon" id="homePrev" aria-label="Mes anterior">‹</button>
+            <span class="cal__title" id="homeCalTitle"></span>
+            <button class="btn btn--icon" id="homeNext" aria-label="Mes siguiente">›</button>
+          </div>
+          <div class="cal__grid" id="homeCal"></div>
+        </div>
+
+        <div class="card">
+          <div class="card__head">
+            <h3>Próximos e importantes</h3>
+            <button class="btn btn--primary" id="addFromHome">Añadir</button>
+          </div>
+          <div class="upcoming" id="upcomingList"></div>
+        </div>
+      </div>
+
+      <div class="grid grid--split" style="margin-top:18px">
+        <div class="card">
+          <div class="card__head">
+            <h3>Últimas notas</h3>
+            <span class="muted" id="homeAvg"></span>
+          </div>
+          <div id="homeGrades"></div>
+        </div>
+        <div class="card">
+          <div class="card__head"><h3>Tareas de hoy</h3></div>
+          <div id="homeTodos"></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ---------- Vista: Calendario ---------- -->
+    <section class="view" id="view-calendario">
+      <div class="card">
+        <div class="cal__top">
+          <div class="cal__nav">
+            <button class="btn btn--icon" id="calPrev" aria-label="Mes anterior">‹</button>
+            <span class="cal__title" id="calTitle"></span>
+            <button class="btn btn--icon" id="calNext" aria-label="Mes siguiente">›</button>
+          </div>
+          <div class="cal__actions">
+            <button class="btn btn--ghost" id="calToday">Hoy</button>
+            <button class="btn btn--primary" id="addEventBtn">Nuevo</button>
+          </div>
+        </div>
+        <div class="cal__grid" id="bigCal"></div>
+      </div>
+
+      <div class="card" style="margin-top:18px">
+        <div class="card__head">
+          <h3 id="dayTitle">Agenda</h3>
+          <span class="muted">Toca un día del calendario para ver o añadir lo de ese día</span>
+        </div>
+        <div id="agendaList"></div>
+      </div>
+    </section>
+
+    <!-- ---------- Vista: Notas ---------- -->
+    <section class="view" id="view-notas">
+      <div class="avg">
+        <b id="avgValue">—</b>
+        <span class="muted">media de las notas filtradas</span>
+      </div>
+
+      <div class="card">
+        <div class="card__head">
+          <h3>Registro de notas</h3>
+          <button class="btn btn--primary" id="addGradeBtn">Añadir nota</button>
+        </div>
+        <div class="filters">
+          <select id="fSubject"><option value="">Todas las asignaturas</option></select>
+          <select id="fTerm">
+            <option value="">Los tres trimestres</option>
+            <option value="1">1º trimestre</option>
+            <option value="2">2º trimestre</option>
+            <option value="3">3º trimestre</option>
+          </select>
+          <select id="fMonth"><option value="">Todos los meses</option></select>
+        </div>
+        <div id="gradesList"></div>
+      </div>
+    </section>
+
+    <!-- ---------- Vista: Tareas ---------- -->
+    <section class="view" id="view-tareas">
+      <div class="card">
+        <div class="card__head">
+          <h3>Lista de tareas</h3>
+          <span class="muted" id="todoStats"></span>
+        </div>
+        <div class="inline-form">
+          <input id="todoText" placeholder="Escribe una tarea y pulsa Añadir">
+          <select id="todoPrio">
+            <option value="alta">Importancia alta</option>
+            <option value="media" selected>Importancia media</option>
+            <option value="baja">Importancia baja</option>
+          </select>
+          <button class="btn btn--primary" id="addTodoBtn">Añadir</button>
+        </div>
+        <div id="todoList"></div>
+      </div>
+    </section>
+
+    <!-- ---------- Vista: Accesos ---------- -->
+    <section class="view" id="view-accesos">
+      <div class="card">
+        <div class="card__head"><h3>Accesos rápidos</h3></div>
+        <div class="links" id="linksGrid"></div>
+      </div>
+    </section>
+
+  </main>
+</div>
+
+<!-- ===================== MODAL: EVENTO ===================== -->
+<div class="modal" id="eventModal" role="dialog" aria-modal="true" aria-labelledby="eventModalTitle">
+  <div class="modal__box">
+    <h3 id="eventModalTitle">Nuevo evento</h3>
+    <div class="row row--one">
+      <div class="field">
+        <label for="evTitle">Título</label>
+        <input id="evTitle" placeholder="Examen tema 4, entrega del comentario…">
+      </div>
+    </div>
+    <div class="row">
+      <div class="field">
+        <label for="evSubject">Asignatura</label>
+        <input id="evSubject" list="subjectList" placeholder="Historia">
+        <datalist id="subjectList"></datalist>
+      </div>
+      <div class="field">
+        <label for="evType">Tipo</label>
+        <select id="evType">
+          <option value="examen">Examen</option>
+          <option value="tarea">Tarea</option>
+          <option value="evento">Evento</option>
+        </select>
+      </div>
+    </div>
+    <div class="row">
+      <div class="field">
+        <label for="evDate">Fecha</label>
+        <input id="evDate" type="date">
+      </div>
+      <div class="field">
+        <label for="evPrio">Importancia</label>
+        <select id="evPrio">
+          <option value="alta">Alta</option>
+          <option value="media" selected>Media</option>
+          <option value="baja">Baja</option>
+        </select>
+      </div>
+    </div>
+    <label class="checkline">
+      <input type="checkbox" id="evImportant" checked> Mostrar en el panel de próximos
+    </label>
+    <div class="modal__actions">
+      <button class="btn" data-close>Cancelar</button>
+      <button class="btn btn--primary" id="saveEvent">Guardar evento</button>
+    </div>
+  </div>
+</div>
+
+<!-- ===================== MODAL: NOTA ===================== -->
+<div class="modal" id="gradeModal" role="dialog" aria-modal="true" aria-labelledby="gradeModalTitle">
+  <div class="modal__box">
+    <h3 id="gradeModalTitle">Nueva nota</h3>
+    <div class="row">
+      <div class="field">
+        <label for="grSubject">Asignatura</label>
+        <input id="grSubject" list="subjectList" placeholder="Matemáticas I">
+      </div>
+      <div class="field">
+        <label for="grScore">Nota (0–10)</label>
+        <input id="grScore" type="number" min="0" max="10" step="0.1" placeholder="8.2">
+      </div>
+    </div>
+    <div class="row">
+      <div class="field">
+        <label for="grTitle">Prueba</label>
+        <input id="grTitle" placeholder="Examen tema 3">
+      </div>
+      <div class="field">
+        <label for="grTerm">Trimestre</label>
+        <select id="grTerm">
+          <option value="1">1º</option>
+          <option value="2">2º</option>
+          <option value="3">3º</option>
+        </select>
+      </div>
+    </div>
+    <div class="row row--one">
+      <div class="field">
+        <label for="grDate">Fecha</label>
+        <input id="grDate" type="date">
+      </div>
+    </div>
+    <div class="modal__actions">
+      <button class="btn" data-close>Cancelar</button>
+      <button class="btn btn--primary" id="saveGrade">Guardar nota</button>
+    </div>
+  </div>
+</div>
+
+<!-- main.js arranca la página e importa cada herramienta -->
+<script type="module" src="js/main.js"></script>
+</body>
+</html>

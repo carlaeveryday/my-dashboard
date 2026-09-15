@@ -1,0 +1,24 @@
+/* ============================================================
+   todos.css — lista de tareas con color por importancia.
+   ============================================================ */
+
+.todo{
+  display:flex;align-items:center;gap:12px;
+  padding:11px 12px;border-radius:12px;background:var(--surface-2);
+  border-left:4px solid var(--neon);margin-bottom:8px;
+}
+.todo[data-prio="alta"]{border-color:var(--prio-alta)}
+.todo[data-prio="media"]{border-color:var(--prio-media)}
+.todo[data-prio="baja"]{border-color:var(--prio-baja)}
+.todo.is-done{opacity:.5}
+.todo.is-done .todo__text{text-decoration:line-through}
+.todo__text{flex:1;min-width:0;font-size:14px}
+
+.check{
+  width:22px;height:22px;border-radius:7px;border:2px solid var(--text-3);
+  display:grid;place-items:center;flex:0 0 auto;
+  transition:background var(--t),border-color var(--t);
+}
+.check svg{width:14px;height:14px;stroke:currentColor;fill:none;stroke-width:3;opacity:0}
+.todo.is-done .check{background:var(--neon);border-color:var(--neon);color:#fff}
+.todo.is-done .check svg{opacity:1}

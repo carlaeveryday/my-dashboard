@@ -1,0 +1,24 @@
+/* ============================================================
+   grades.css — registro de notas, barras 0–10, filtros y media.
+   ============================================================ */
+
+.grade{padding:12px 0;border-bottom:1px solid var(--line)}
+.grade:last-child{border-bottom:none}
+.grade__top{display:flex;align-items:baseline;justify-content:space-between;gap:10px}
+.grade__top b{font-weight:600;font-size:14px}
+.grade__score{font-variant-numeric:tabular-nums;font-weight:700}
+
+/* La barra recibe su ancho y su color desde JS según la nota */
+.bar{height:8px;border-radius:999px;background:var(--track);margin-top:8px;overflow:hidden}
+.bar i{display:block;height:100%;border-radius:999px;transition:width 600ms cubic-bezier(.2,.8,.2,1)}
+
+.filters{display:flex;gap:10px;flex-wrap:wrap;margin-bottom:6px}
+.filters select{width:auto;min-width:130px;padding:8px 10px;font-size:13px}
+
+.avg{
+  display:flex;align-items:baseline;gap:8px;
+  padding:14px 16px;border-radius:14px;margin-bottom:14px;
+  background:linear-gradient(100deg,rgba(138,43,226,.18),rgba(168,85,247,.05));
+  border:1px solid var(--line);
+}
+.avg b{font-size:30px;font-weight:700;letter-spacing:-.03em}

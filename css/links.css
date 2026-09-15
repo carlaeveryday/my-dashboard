@@ -1,0 +1,17 @@
+/* ============================================================
+   links.css — accesos directos a Classroom, Gmail, Docs, Gemini…
+   ============================================================ */
+
+.links{display:grid;grid-template-columns:repeat(auto-fill,minmax(150px,1fr));gap:12px}
+.link{
+  display:flex;align-items:center;gap:11px;
+  padding:13px 14px;border-radius:14px;
+  border:1px solid var(--line);background:var(--surface-2);
+  color:var(--text);text-decoration:none;font-weight:600;font-size:14px;
+  transition:border-color var(--t),transform var(--t);
+}
+.link:hover{border-color:var(--neon);transform:translateY(-2px)}
+.link i{
+  width:32px;height:32px;border-radius:10px;display:grid;place-items:center;
+  font-style:normal;font-size:14px;font-weight:700;color:#fff;
+}
