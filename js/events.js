@@ -5,7 +5,7 @@
    ============================================================ */
 
 import { $, MONTHS, uid, iso, parseDate, daysLeft, leftLabel, escapeHtml } from './utils.js';
-import { state, commit, onChange, getSubjects } from '../store.js';
+import { state, commit, onChange, getSubjects } from './store.js';
 import { calendarState, monthTitle } from './calendar.js';
 
 /* ---------- Pintado ---------- */
