@@ -3,8 +3,8 @@
    color y resumen en la pantalla de Inicio.
    ============================================================ */
 
-import { $, uid, escapeHtml, daysLeft, PRIORITY_RANK } from './utils.js';
-import { state, commit, onChange } from './store.js';
+import { $, escapeHtml, daysLeft, PRIORITY_RANK } from './utils.js';
+import { state, onChange, addTodo, toggleTodo, deleteTodo } from './store.js';
 
 const row = (t) => `<div class="todo${t.done ? ' is-done' : ''}" data-prio="${t.priority}">
   <button class="check" data-toggle="${t.id}" aria-label="Marcar como hecha" aria-pressed="${t.done}">
@@ -36,35 +36,32 @@ export const renderTodos = () => {
   $('#pendingCount').textContent = `${pending.length} tareas y ${dates} fechas por delante`;
 };
 
-const addTodo = () => {
+const submitTodo = () => {
   const input = $('#todoText');
   const text = input.value.trim();
   if (!text) { input.focus(); return; }
 
-  state.todos.push({ id: uid(), text, done: false, priority: $('#todoPrio').value });
+  addTodo({ text, priority: $('#todoPrio').value });
   input.value = '';
-  commit();
   input.focus();
 };
 
 export const initTodos = () => {
-  $('#addTodoBtn').addEventListener('click', addTodo);
+  $('#addTodoBtn').addEventListener('click', submitTodo);
   $('#todoText').addEventListener('keydown', (ev) => {
-    if (ev.key === 'Enter') addTodo();
+    if (ev.key === 'Enter') submitTodo();
   });
 
   document.addEventListener('click', (ev) => {
     const toggle = ev.target.closest('[data-toggle]');
     if (toggle) {
-      const todo = state.todos.find((t) => t.id === toggle.dataset.toggle);
-      if (todo) { todo.done = !todo.done; commit(); }
+      toggleTodo(toggle.dataset.toggle);
       return;
     }
 
     const remove = ev.target.closest('[data-del-todo]');
     if (remove) {
-      state.todos = state.todos.filter((t) => t.id !== remove.dataset.delTodo);
-      commit();
+      deleteTodo(remove.dataset.delTodo);
     }
   });
 

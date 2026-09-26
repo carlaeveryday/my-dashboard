@@ -5,7 +5,7 @@
    ============================================================ */
 
 import { $, $$ } from './utils.js';
-import { state, persist, refresh } from './store.js';
+import { state, onChange, loadAll, setTheme, setPinned } from './store.js';
 
 import { initCalendar } from './calendar.js';
 import { initEvents } from './events.js';
@@ -20,9 +20,8 @@ const Theme = {
     $('#themeToggle').setAttribute('aria-checked', String(state.theme === 'dark'));
   },
   toggle() {
-    state.theme = state.theme === 'dark' ? 'light' : 'dark';
+    setTheme(state.theme === 'dark' ? 'light' : 'dark');
     this.apply();
-    persist();
   },
   init() {
     this.apply();
@@ -46,12 +45,11 @@ const Sidebar = {
   },
 
   setPinned(pinned) {
-    state.pinned = pinned;
     const btn = $('#pinBtn');
     btn.classList.toggle('is-active', pinned);
     $('.sidebar__label', btn).textContent = pinned ? 'Soltar menú' : 'Fijar menú';
     if (pinned) this.open(); else this.close();
-    persist();
+    setPinned(pinned);
   },
 
   init() {
@@ -133,4 +131,10 @@ initGrades();
 initTodos();
 initLinks();
 
-refresh(); // primer pintado de todas las herramientas
+// Cuando llegan los ajustes guardados en Supabase, refleja tema y menú fijado.
+onChange(() => {
+  Theme.apply();
+  if (state.pinned) Sidebar.open(); else Sidebar.close();
+});
+
+loadAll(); // pide los datos a Supabase; pinta en cuanto responden

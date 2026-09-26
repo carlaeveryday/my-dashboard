@@ -4,8 +4,8 @@
    y el formulario para crearlos o borrarlos.
    ============================================================ */
 
-import { $, MONTHS, uid, iso, parseDate, daysLeft, leftLabel, escapeHtml } from './utils.js';
-import { state, commit, onChange, getSubjects } from './store.js';
+import { $, MONTHS, iso, parseDate, daysLeft, leftLabel, escapeHtml } from './utils.js';
+import { state, onChange, getSubjects, addEvent, deleteEvent } from './store.js';
 import { calendarState, monthTitle } from './calendar.js';
 
 /* ---------- Pintado ---------- */
@@ -91,8 +91,7 @@ const saveEvent = () => {
     return;
   }
 
-  state.events.push({
-    id: uid(),
+  addEvent({
     title,
     subject: $('#evSubject').value.trim(),
     type: $('#evType').value,
@@ -102,7 +101,6 @@ const saveEvent = () => {
   });
 
   $('#eventModal').classList.remove('is-open');
-  commit();
 };
 
 /* ---------- Arranque del módulo ---------- */
@@ -121,8 +119,7 @@ export const initEvents = () => {
   document.addEventListener('click', (ev) => {
     const btn = ev.target.closest('[data-del-event]');
     if (!btn) return;
-    state.events = state.events.filter((e) => e.id !== btn.dataset.delEvent);
-    commit();
+    deleteEvent(btn.dataset.delEvent);
   });
 
   onChange(renderEvents);

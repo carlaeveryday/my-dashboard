@@ -4,8 +4,8 @@
    sobre lo que se está viendo.
    ============================================================ */
 
-import { $, MONTHS, uid, iso, escapeHtml, gradeColor } from './utils.js';
-import { state, commit, onChange, getSubjects } from '../store.js';
+import { $, MONTHS, iso, escapeHtml, gradeColor } from './utils.js';
+import { state, onChange, getSubjects, addGrade, deleteGrade } from './store.js';
 
 /* ---------- Filtros ---------- */
 const filtered = () => {
@@ -94,8 +94,7 @@ const saveGrade = () => {
   if (!subject) { $('#grSubject').focus(); return; }
   if (Number.isNaN(score) || score < 0 || score > 10) { $('#grScore').focus(); return; }
 
-  state.grades.push({
-    id: uid(),
+  addGrade({
     subject,
     title: $('#grTitle').value.trim(),
     score: Math.round(score * 10) / 10,
@@ -104,7 +103,6 @@ const saveGrade = () => {
   });
 
   $('#gradeModal').classList.remove('is-open');
-  commit();
 };
 
 /* ---------- Arranque del módulo ---------- */
@@ -118,8 +116,7 @@ export const initGrades = () => {
   document.addEventListener('click', (ev) => {
     const btn = ev.target.closest('[data-del-grade]');
     if (!btn) return;
-    state.grades = state.grades.filter((g) => g.id !== btn.dataset.delGrade);
-    commit();
+    deleteGrade(btn.dataset.delGrade);
   });
 
   onChange(renderGrades);
