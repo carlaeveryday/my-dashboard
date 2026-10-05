@@ -24,8 +24,8 @@
   <!-- ===================== SIDEBAR ===================== -->
   <aside class="sidebar" id="sidebar" aria-label="Navegación principal">
     <div class="sidebar__brand">
-      <img class="brand-mark" src="assets/logo.svg" alt="Logo de My Dashboard">
-      <div class="sidebar__label">My Dashboard</div>
+    <img class="brand-mark" src="assets/logo.svg" alt="Logo de My Dashboard">       
+    <div class="sidebar__label">My Dashboard</div>
     </div>
 
     <nav id="nav">
@@ -167,21 +167,6 @@
         </div>
         <div id="gradesList"></div>
       </div>
-
-      <div class="card" style="margin-top:18px">
-        <div class="card__head">
-          <h3>Media general por mes</h3>
-        </div>
-        <div class="chart-wrap"><canvas id="avgChart"></canvas></div>
-      </div>
-
-      <div class="card" style="margin-top:18px">
-        <div class="card__head">
-          <h3>Evolución por asignatura</h3>
-          <select id="chartSubject"></select>
-        </div>
-        <div class="chart-wrap"><canvas id="subjectChart"></canvas></div>
-      </div>
     </section>
 
     <!-- ---------- Vista: Tareas ---------- -->
@@ -304,9 +289,6 @@
     </div>
   </div>
 </div>
-
-<!-- Chart.js para las gráficas de notas (debe cargar antes que main.js) -->
-<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.4/chart.umd.min.js"></script>
 
 <!-- main.js arranca la página e importa cada herramienta -->
 <script type="module" src="js/main.js"></script>
